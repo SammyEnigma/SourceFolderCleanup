@@ -1,20 +1,66 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
+﻿using JsonSettings.Library;
+using SourceFolderCleanup.Models;
+using System;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using WinForms.Library;
+using WinForms.Library.Extensions.ComboBoxes;
+using WinForms.Library.Models;
 
 namespace SourceFolderCleanup
 {
     public partial class frmMain : Form
     {
+        private Settings _settings;
+        private ControlBinder<Settings> _binder;
+
         public frmMain()
         {
             InitializeComponent();
+        }
+
+        private void frmMain_Load(object sender, System.EventArgs e)
+        {
+            var monthValues = new int[] { 3, 6, 9, 12 }.Select(i => new ListItem<int>(i, i.ToString()));
+
+            _settings = SettingsBase.Load<Settings>();
+            _binder = new ControlBinder<Settings>();            
+
+            _binder.Add(tbSourcePath, model => model.SourcePath);
+            _binder.Add(chkDeleteBinObj, model => model.DeleteBinAndObj);
+            _binder.Add(chkDeletePackages, model => model.DeletePackages);
+            
+            _binder.AddItems(cbDeleteMonths,
+                (model) => model.DeleteMonthsOld = cbDeleteMonths.GetValue<int>(),
+                (model) => cbDeleteMonths.SetValue(model.DeleteMonthsOld), monthValues);
+
+            _binder.Add(chkArchive, model => model.Archive);
+            _binder.Add(tbArchivePath, model => model.ArchivePath);
+            _binder.AddItems(cbArchiveMonths,
+                (model) => model.ArchiveMonthsOld = cbArchiveMonths.GetValue<int>(),
+                (model) => cbArchiveMonths.SetValue(model.ArchiveMonthsOld), monthValues);
+
+            _binder.Document = _settings;
+        }
+
+        private void btnExit_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
+        private void frmMain_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            _settings.Save();
+        }
+
+        private void tbArchivePath_BuilderClicked(object sender, WinForms.Library.Controls.BuilderEventArgs e)
+        {
+            tbArchivePath.SelectFolder(e);
+        }
+
+        private void tbSourcePath_BuilderClicked(object sender, WinForms.Library.Controls.BuilderEventArgs e)
+        {
+            tbSourcePath.SelectFolder(e);
         }
     }
 }

@@ -82,6 +82,9 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="JsonSettings.Library">
+      <Version>1.0.19</Version>
+    </PackageReference>
     <PackageReference Include="WinForms.Library">
       <Version>1.0.44</Version>
     </PackageReference>
