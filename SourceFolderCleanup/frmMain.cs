@@ -27,6 +27,7 @@ namespace SourceFolderCleanup
             _binder = new ControlBinder<Settings>();            
 
             _binder.Add(tbSourcePath, model => model.SourcePath);
+            _binder.Add(chkDelete, model => model.Delete);
             _binder.Add(chkDeleteBinObj, model => model.DeleteBinAndObj);
             _binder.Add(chkDeletePackages, model => model.DeletePackages);
             
@@ -41,6 +42,8 @@ namespace SourceFolderCleanup
                 (model) => cbArchiveMonths.SetValue(model.ArchiveMonthsOld), monthValues);
 
             _binder.Document = _settings;
+            chkArchive_CheckedChanged(null, new EventArgs());
+            chkDelete_CheckedChanged(null, new EventArgs());
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -61,6 +64,22 @@ namespace SourceFolderCleanup
         private void tbSourcePath_BuilderClicked(object sender, WinForms.Library.Controls.BuilderEventArgs e)
         {
             tbSourcePath.SelectFolder(e);
+        }
+
+        private void chkArchive_CheckedChanged(object sender, EventArgs e)
+        {
+            cbArchiveMonths.Enabled = chkArchive.Checked;
+            tbArchivePath.Enabled = chkArchive.Checked;
+            linkLabel4.Enabled = chkArchive.Checked;
+        }
+
+        private void chkDelete_CheckedChanged(object sender, EventArgs e)
+        {
+            chkDeleteBinObj.Enabled = chkDelete.Checked;
+            chkDeletePackages.Enabled = chkDelete.Checked;
+            cbDeleteMonths.Enabled = chkDelete.Checked;
+            linkLabel2.Enabled = chkDelete.Checked;
+            linkLabel3.Enabled = chkDelete.Checked;
         }
     }
 }

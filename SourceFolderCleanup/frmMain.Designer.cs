@@ -46,7 +46,7 @@
             this.linkLabel3 = new System.Windows.Forms.LinkLabel();
             this.linkLabel4 = new System.Windows.Forms.LinkLabel();
             this.tbSourcePath = new WinForms.Library.Controls.BuilderTextBox();
-            this.label6 = new System.Windows.Forms.Label();
+            this.chkDelete = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label1
@@ -91,7 +91,7 @@
             // 
             this.cbDeleteMonths.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbDeleteMonths.FormattingEnabled = true;
-            this.cbDeleteMonths.Location = new System.Drawing.Point(151, 87);
+            this.cbDeleteMonths.Location = new System.Drawing.Point(167, 87);
             this.cbDeleteMonths.Name = "cbDeleteMonths";
             this.cbDeleteMonths.Size = new System.Drawing.Size(73, 21);
             this.cbDeleteMonths.TabIndex = 6;
@@ -99,7 +99,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(230, 90);
+            this.label4.Location = new System.Drawing.Point(246, 90);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(54, 13);
             this.label4.TabIndex = 7;
@@ -114,6 +114,7 @@
             this.chkArchive.TabIndex = 9;
             this.chkArchive.Text = "Archive projects older than";
             this.chkArchive.UseVisualStyleBackColor = true;
+            this.chkArchive.CheckedChanged += new System.EventHandler(this.chkArchive_CheckedChanged);
             // 
             // cbArchiveMonths
             // 
@@ -223,21 +224,23 @@
             this.tbSourcePath.Value = "";
             this.tbSourcePath.BuilderClicked += new WinForms.Library.Controls.BuilderEventHandler(this.tbSourcePath_BuilderClicked);
             // 
-            // label6
+            // chkDelete
             // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(12, 90);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(133, 13);
-            this.label6.TabIndex = 22;
-            this.label6.Text = "Delete files older than";
+            this.chkDelete.AutoSize = true;
+            this.chkDelete.Location = new System.Drawing.Point(12, 89);
+            this.chkDelete.Name = "chkDelete";
+            this.chkDelete.Size = new System.Drawing.Size(152, 17);
+            this.chkDelete.TabIndex = 22;
+            this.chkDelete.Text = "Delete files older than";
+            this.chkDelete.UseVisualStyleBackColor = true;
+            this.chkDelete.CheckedChanged += new System.EventHandler(this.chkDelete_CheckedChanged);
             // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(513, 300);
-            this.Controls.Add(this.label6);
+            this.Controls.Add(this.chkDelete);
             this.Controls.Add(this.tbSourcePath);
             this.Controls.Add(this.linkLabel4);
             this.Controls.Add(this.linkLabel3);
@@ -290,7 +293,7 @@
         private System.Windows.Forms.LinkLabel linkLabel3;
         private System.Windows.Forms.LinkLabel linkLabel4;
         private WinForms.Library.Controls.BuilderTextBox tbSourcePath;
-        private System.Windows.Forms.Label label6;
+        private System.Windows.Forms.CheckBox chkDelete;
     }
 }
 
