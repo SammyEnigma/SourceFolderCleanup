@@ -81,5 +81,7 @@ namespace SourceFolderCleanup
             linkLabel2.Enabled = chkDelete.Checked;
             linkLabel3.Enabled = chkDelete.Checked;
         }
+
+        //private async Task
     }
 }
