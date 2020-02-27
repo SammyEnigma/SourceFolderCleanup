@@ -1,5 +1,6 @@
 ﻿using JsonSettings.Library;
 using SourceFolderCleanup.Models;
+using SourceFolderCleanup.Services;
 using System;
 using System.Linq;
 using System.Windows.Forms;
@@ -19,7 +20,7 @@ namespace SourceFolderCleanup
             InitializeComponent();
         }
 
-        private void frmMain_Load(object sender, System.EventArgs e)
+        private async void frmMain_Load(object sender, System.EventArgs e)
         {
             var monthValues = new int[] { 3, 6, 9, 12 }.Select(i => new ListItem<int>(i, i.ToString()));
 
@@ -80,6 +81,21 @@ namespace SourceFolderCleanup
             cbDeleteMonths.Enabled = chkDelete.Checked;
             linkLabel2.Enabled = chkDelete.Checked;
             linkLabel3.Enabled = chkDelete.Checked;
+        }
+
+        private async void cbDeleteMonths_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var fsu = new FileSystemUtil();
+            
+            if (_settings.DeleteBinAndObj)
+            {
+                
+            }
+
+            if (_settings.DeletePackages)
+            {
+
+            }
         }
 
         //private async Task

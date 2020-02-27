@@ -27,6 +27,24 @@ namespace SourceFolderCleanup.Services
             });
             
             return result;
+        }               
+
+        public IEnumerable<string> FilterFoldersOlderThan(IEnumerable<string> folders, int daysOld)
+        {
+            DateTime cutOff = DateTime.Today.AddDays(daysOld * -1);
+            return folders.Where(path => GetFolderMaxDate(path) < cutOff);
+        }
+
+        public async Task<IEnumerable<string>> GetBinObjFoldersAsync(string parentPath)
+        {
+            IEnumerable<string> results = null;
+
+            await Task.Run(() =>
+            {
+                results = GetBinObjFolders(parentPath);
+            });
+
+            return results;
         }
 
         public IEnumerable<string> GetBinObjFolders(string parentPath)
@@ -34,13 +52,30 @@ namespace SourceFolderCleanup.Services
             return GetSubfoldersNamed(parentPath, new string[] { "bin", "obj" }, new string[] { "node_modules" });
         }
 
-        public IEnumerable<string> GetSubfoldersNamed(string parentPath, string[] includeNames, string[] excludeNames = null)
+        public async Task<IEnumerable<string>> GetPackagesFoldersAsync(string parentPath)
+        {
+            IEnumerable<string> results = null;
+
+            await Task.Run(() =>
+            {
+                results = GetPackagesFolders(parentPath);
+            });
+
+            return results;
+        }
+
+        public IEnumerable<string> GetPackagesFolders(string parentPath)
+        {
+            return GetSubfoldersNamed(parentPath, new string[] { "packages" });
+        }
+
+        private IEnumerable<string> GetSubfoldersNamed(string parentPath, string[] includeNames, string[] excludeNames = null)
         {
             List<string> results = new List<string>();
 
             FileSystem.EnumFiles(parentPath, "*", directoryFound: (di) =>
             {
-                if (includeNames.Any(name => di.Name.Equals(name)) && (excludeNames?.All(name => !di.FullName.Contains(name)) ?? true))
+                if (includeNames.Contains(di.Name) && (excludeNames?.All(name => !di.FullName.Contains(name)) ?? true))
                 {
                     results.Add(di.FullName);
                     return EnumFileResult.NextFolder;

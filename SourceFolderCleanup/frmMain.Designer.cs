@@ -95,6 +95,7 @@
             this.cbDeleteMonths.Name = "cbDeleteMonths";
             this.cbDeleteMonths.Size = new System.Drawing.Size(73, 21);
             this.cbDeleteMonths.TabIndex = 6;
+            this.cbDeleteMonths.SelectedIndexChanged += new System.EventHandler(this.cbDeleteMonths_SelectedIndexChanged);
             // 
             // label4
             // 

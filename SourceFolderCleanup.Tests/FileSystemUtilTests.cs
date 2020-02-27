@@ -11,16 +11,25 @@ namespace SourceFolderCleanup.Tests
         [TestMethod]
         public void GetBinFolders()
         {
-            var results = new FileSystemUtil().GetSubfoldersNamed(@"C:\Users\Adam\Source\Repos", new string[] { "bin", "obj" }, new string[] { "node_modules" });
+            var fsu = new FileSystemUtil();
+            var results = fsu.GetBinObjFoldersAsync(@"C:\Users\Adam\Source\Repos").Result;
             Assert.IsTrue(results.All(name => name.EndsWith("bin") || name.EndsWith("obj")));
             Assert.IsTrue(results.Any(name => name.EndsWith("obj")));
+        }
+
+        [TestMethod]
+        public void GetPackagesFolders()
+        {
+            var fsu = new FileSystemUtil();
+            var results = fsu.GetPackagesFoldersAsync(@"C:\Users\Adam\Source\Repos").Result;
+            Assert.IsTrue(results.All(name => name.EndsWith("packages")));
         }
 
         [TestMethod]
         public void GetBinFoldersOlderThan()
         {
             var fsu = new FileSystemUtil();
-            var results = fsu.GetBinObjFolders(@"C:\Users\Adam\Source\Repos");
+            var results = fsu.GetBinObjFoldersAsync(@"C:\Users\Adam\Source\Repos").Result;
             var cutoffDate = DateTime.Today.AddDays(-90);
             var deleteable = results.Where(path => fsu.GetFolderMaxDate(path) < cutoffDate).ToArray();
         }
