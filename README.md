@@ -32,3 +32,24 @@ private void frmMain_Load(object sender, System.EventArgs e)
 	chkDelete_CheckedChanged(null, new EventArgs());
 }
 ```
+I'm also using WinForm.Library's [EnumFiles](https://github.com/adamosoftware/WinForms.Library/blob/master/WinForms.Library/FileSystem_DotNetSearch.cs#L27) method to [find](https://github.com/adamosoftware/SourceFolderCleanup/blob/master/SourceFolderCleanup/Services/FileSystemUtil.cs#L32) `bin` and `obj` directories. The base implementation looks like this:
+
+```csharp
+public IEnumerable<string> GetSubfoldersNamed(string parentPath, string[] includeNames, string[] excludeNames = null)
+{
+	List<string> results = new List<string>();
+
+	FileSystem.EnumFiles(parentPath, "*", directoryFound: (di) =>
+	{
+		if (includeNames.Any(name => di.Name.Equals(name)) && (excludeNames?.All(name => !di.FullName.Contains(name)) ?? true))
+		{
+			results.Add(di.FullName);
+			return EnumFileResult.NextFolder;
+		}
+
+		return EnumFileResult.Continue;
+	});
+
+	return results;
+}
+```
