@@ -42,8 +42,8 @@
             this.btnExit = new System.Windows.Forms.Button();
             this.btnExecute = new System.Windows.Forms.Button();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-            this.linkLabel2 = new System.Windows.Forms.LinkLabel();
-            this.linkLabel3 = new System.Windows.Forms.LinkLabel();
+            this.llBinObjSize = new System.Windows.Forms.LinkLabel();
+            this.llPackagesSize = new System.Windows.Forms.LinkLabel();
             this.linkLabel4 = new System.Windows.Forms.LinkLabel();
             this.tbSourcePath = new WinForms.Library.Controls.BuilderTextBox();
             this.chkDelete = new System.Windows.Forms.CheckBox();
@@ -109,7 +109,7 @@
             // chkArchive
             // 
             this.chkArchive.AutoSize = true;
-            this.chkArchive.Location = new System.Drawing.Point(12, 171);
+            this.chkArchive.Location = new System.Drawing.Point(12, 175);
             this.chkArchive.Name = "chkArchive";
             this.chkArchive.Size = new System.Drawing.Size(181, 17);
             this.chkArchive.TabIndex = 9;
@@ -121,7 +121,7 @@
             // 
             this.cbArchiveMonths.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbArchiveMonths.FormattingEnabled = true;
-            this.cbArchiveMonths.Location = new System.Drawing.Point(199, 169);
+            this.cbArchiveMonths.Location = new System.Drawing.Point(199, 173);
             this.cbArchiveMonths.Name = "cbArchiveMonths";
             this.cbArchiveMonths.Size = new System.Drawing.Size(73, 21);
             this.cbArchiveMonths.TabIndex = 10;
@@ -129,7 +129,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(278, 172);
+            this.label3.Location = new System.Drawing.Point(278, 176);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(49, 13);
             this.label3.TabIndex = 11;
@@ -138,7 +138,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(27, 195);
+            this.label5.Location = new System.Drawing.Point(27, 199);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(106, 13);
             this.label5.TabIndex = 13;
@@ -147,7 +147,7 @@
             // tbArchivePath
             // 
             this.tbArchivePath.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbArchivePath.Location = new System.Drawing.Point(30, 211);
+            this.tbArchivePath.Location = new System.Drawing.Point(30, 215);
             this.tbArchivePath.Name = "tbArchivePath";
             this.tbArchivePath.Size = new System.Drawing.Size(471, 26);
             this.tbArchivePath.Suggestions = null;
@@ -184,30 +184,30 @@
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "History...";
             // 
-            // linkLabel2
+            // llBinObjSize
             // 
-            this.linkLabel2.AutoSize = true;
-            this.linkLabel2.Location = new System.Drawing.Point(179, 119);
-            this.linkLabel2.Name = "linkLabel2";
-            this.linkLabel2.Size = new System.Drawing.Size(52, 13);
-            this.linkLabel2.TabIndex = 18;
-            this.linkLabel2.TabStop = true;
-            this.linkLabel2.Text = "preview";
+            this.llBinObjSize.AutoSize = true;
+            this.llBinObjSize.Location = new System.Drawing.Point(179, 119);
+            this.llBinObjSize.Name = "llBinObjSize";
+            this.llBinObjSize.Size = new System.Drawing.Size(52, 13);
+            this.llBinObjSize.TabIndex = 18;
+            this.llBinObjSize.TabStop = true;
+            this.llBinObjSize.Text = "preview";
             // 
-            // linkLabel3
+            // llPackagesSize
             // 
-            this.linkLabel3.AutoSize = true;
-            this.linkLabel3.Location = new System.Drawing.Point(121, 142);
-            this.linkLabel3.Name = "linkLabel3";
-            this.linkLabel3.Size = new System.Drawing.Size(52, 13);
-            this.linkLabel3.TabIndex = 19;
-            this.linkLabel3.TabStop = true;
-            this.linkLabel3.Text = "preview";
+            this.llPackagesSize.AutoSize = true;
+            this.llPackagesSize.Location = new System.Drawing.Point(121, 142);
+            this.llPackagesSize.Name = "llPackagesSize";
+            this.llPackagesSize.Size = new System.Drawing.Size(52, 13);
+            this.llPackagesSize.TabIndex = 19;
+            this.llPackagesSize.TabStop = true;
+            this.llPackagesSize.Text = "preview";
             // 
             // linkLabel4
             // 
             this.linkLabel4.AutoSize = true;
-            this.linkLabel4.Location = new System.Drawing.Point(333, 172);
+            this.linkLabel4.Location = new System.Drawing.Point(333, 176);
             this.linkLabel4.Name = "linkLabel4";
             this.linkLabel4.Size = new System.Drawing.Size(52, 13);
             this.linkLabel4.TabIndex = 20;
@@ -244,8 +244,8 @@
             this.Controls.Add(this.chkDelete);
             this.Controls.Add(this.tbSourcePath);
             this.Controls.Add(this.linkLabel4);
-            this.Controls.Add(this.linkLabel3);
-            this.Controls.Add(this.linkLabel2);
+            this.Controls.Add(this.llPackagesSize);
+            this.Controls.Add(this.llBinObjSize);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.btnExecute);
             this.Controls.Add(this.btnExit);
@@ -290,8 +290,8 @@
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.Button btnExecute;
         private System.Windows.Forms.LinkLabel linkLabel1;
-        private System.Windows.Forms.LinkLabel linkLabel2;
-        private System.Windows.Forms.LinkLabel linkLabel3;
+        private System.Windows.Forms.LinkLabel llBinObjSize;
+        private System.Windows.Forms.LinkLabel llPackagesSize;
         private System.Windows.Forms.LinkLabel linkLabel4;
         private WinForms.Library.Controls.BuilderTextBox tbSourcePath;
         private System.Windows.Forms.CheckBox chkDelete;

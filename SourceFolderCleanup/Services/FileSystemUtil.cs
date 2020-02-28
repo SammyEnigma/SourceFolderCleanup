@@ -27,7 +27,47 @@ namespace SourceFolderCleanup.Services
             });
             
             return result;
-        }               
+        }
+
+        public async Task<long> GetFolderTotalSizeAsync(IEnumerable<string> folders)
+        {
+            long result = 0;
+
+            await Task.Run(() =>
+            {
+                foreach (string folder in folders)
+                {
+                    result += GetFolderSize(folder);
+                }
+            });
+
+            return result;
+        }
+
+        public long GetFolderSize(string path)
+        {
+            long result = 0;
+
+            FileSystem.EnumFiles(path, "*", fileFound: (fi) =>
+            {
+                result += fi.Length;
+                return EnumFileResult.Continue;
+            });
+
+            return result;
+        }
+
+        public async Task<IEnumerable<string>> FilterFoldersOlderThanAsync(IEnumerable<string> folders, int daysOld)
+        {
+            IEnumerable<string> results = null;
+
+            await Task.Run(() =>
+            {
+                results = FilterFoldersOlderThan(folders, daysOld);
+            });
+
+            return results;
+        }
 
         public IEnumerable<string> FilterFoldersOlderThan(IEnumerable<string> folders, int daysOld)
         {
