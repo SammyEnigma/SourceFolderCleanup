@@ -2,6 +2,7 @@
 using SourceFolderCleanup.Models;
 using SourceFolderCleanup.Services;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -15,6 +16,9 @@ namespace SourceFolderCleanup
     {
         private Settings _settings;
         private ControlBinder<Settings> _binder;
+
+        private IEnumerable<string> _deleteableBinObj;
+        private IEnumerable<string> _deleteablePackages;
 
         public frmMain()
         {
@@ -86,27 +90,43 @@ namespace SourceFolderCleanup
 
         private async void cbDeleteMonths_SelectedIndexChanged(object sender, EventArgs e)
         {
+            llBinObjSize.Enabled = false;
+            llPackagesSize.Enabled = false;
+            llBinObjSize.Text = (chkDeleteBinObj.Checked) ? "Analyzing..." : "disabled";            
+            llPackagesSize.Text = (chkDeletePackages.Checked) ? "Analyzing..." : "disabled";
+
+            List<Task> tasks = new List<Task>();
             if (_settings.DeleteBinAndObj)
             {
-                await AnalyzeFolderAsync(llBinObjSize, _settings.DeleteMonthsOld);
+                tasks.Add(AnalyzeFolderAsync(llBinObjSize, _settings.DeleteMonthsOld, 
+                    async (fsu) => await fsu.GetBinObjFoldersAsync(_settings.SourcePath),
+                    (results) => _deleteableBinObj = results));
             }
 
             if (_settings.DeletePackages)
             {
-                await AnalyzeFolderAsync(llPackagesSize, _settings.DeleteMonthsOld);
+                tasks.Add(AnalyzeFolderAsync(llPackagesSize, _settings.DeleteMonthsOld, 
+                    async (fsu) => await fsu.GetPackagesFoldersAsync(_settings.SourcePath),
+                    (results) => _deleteablePackages = results));
             }
+
+            await Task.WhenAll(tasks);
+
+            llBinObjSize.Enabled = chkDelete.Checked;
+            llPackagesSize.Enabled = chkDelete.Checked;
         }
 
-        private async Task AnalyzeFolderAsync(LinkLabel linkLabel, int deleteMonthsOld)
+        private async Task AnalyzeFolderAsync(
+            LinkLabel linkLabel, int deleteMonthsOld, 
+            Func<FileSystemUtil, Task<IEnumerable<string>>> getFolders, 
+            Action<IEnumerable<string>> captureResults)
         {
             var fsu = new FileSystemUtil();
 
-            linkLabel.Text = "Analyzing...";
-            linkLabel.Enabled = false;
-            var folders = await fsu.GetBinObjFoldersAsync(_settings.SourcePath);
+            var folders = await getFolders.Invoke(fsu);
             var deletable = await fsu.FilterFoldersOlderThanAsync(folders, deleteMonthsOld);
-            long deleteableBytes = await fsu.GetFolderTotalSizeAsync(deletable);
-            linkLabel.Enabled = true;
+            captureResults.Invoke(deletable);
+            long deleteableBytes = await fsu.GetFolderTotalSizeAsync(deletable);            
             linkLabel.Text = $"{deleteableBytes} total size";
         }
 
