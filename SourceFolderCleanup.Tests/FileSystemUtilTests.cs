@@ -13,8 +13,8 @@ namespace SourceFolderCleanup.Tests
         {
             var fsu = new FileSystemUtil();
             var results = fsu.GetBinObjFoldersAsync(@"C:\Users\Adam\Source\Repos").Result;
-            Assert.IsTrue(results.All(name => name.EndsWith("bin") || name.EndsWith("obj")));
-            Assert.IsTrue(results.Any(name => name.EndsWith("obj")));
+            Assert.IsTrue(results.All(folder => folder.Path.EndsWith("bin") || folder.Path.EndsWith("obj")));
+            Assert.IsTrue(results.Any(folder => folder.Path.EndsWith("obj")));
         }
 
         [TestMethod]
@@ -22,7 +22,7 @@ namespace SourceFolderCleanup.Tests
         {
             var fsu = new FileSystemUtil();
             var results = fsu.GetPackagesFoldersAsync(@"C:\Users\Adam\Source\Repos").Result;
-            Assert.IsTrue(results.All(name => name.EndsWith("packages")));
+            Assert.IsTrue(results.All(folder => folder.Path.EndsWith("packages")));
         }
 
         [TestMethod]
@@ -31,7 +31,7 @@ namespace SourceFolderCleanup.Tests
             var fsu = new FileSystemUtil();
             var results = fsu.GetBinObjFoldersAsync(@"C:\Users\Adam\Source\Repos").Result;
             var cutoffDate = DateTime.Today.AddDays(-90);
-            var deleteable = results.Where(path => fsu.GetFolderMaxDate(path) < cutoffDate).ToArray();
+            var deleteable = results.Where(folder => fsu.GetFolderMaxDate(folder.Path) < cutoffDate).ToArray();
         }
     }
 }

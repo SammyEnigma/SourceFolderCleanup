@@ -28,9 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
             this.dgvFolders = new System.Windows.Forms.DataGridView();
-            this.colPath = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.colPath = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.colMaxDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colSize = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFolders)).BeginInit();
             this.SuspendLayout();
@@ -51,6 +53,7 @@
             this.dgvFolders.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvFolders.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.colPath,
+            this.colMaxDate,
             this.colSize});
             this.dgvFolders.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgvFolders.Location = new System.Drawing.Point(0, 0);
@@ -59,6 +62,7 @@
             this.dgvFolders.RowHeadersVisible = false;
             this.dgvFolders.Size = new System.Drawing.Size(484, 294);
             this.dgvFolders.TabIndex = 1;
+            this.dgvFolders.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvFolders_CellContentClick);
             // 
             // colPath
             // 
@@ -67,6 +71,20 @@
             this.colPath.HeaderText = "Path";
             this.colPath.Name = "colPath";
             this.colPath.ReadOnly = true;
+            this.colPath.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.colPath.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
+            // colMaxDate
+            // 
+            this.colMaxDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
+            this.colMaxDate.DataPropertyName = "MaxDate";
+            dataGridViewCellStyle2.Format = "d";
+            dataGridViewCellStyle2.NullValue = null;
+            this.colMaxDate.DefaultCellStyle = dataGridViewCellStyle2;
+            this.colMaxDate.HeaderText = "Last Modified";
+            this.colMaxDate.Name = "colMaxDate";
+            this.colMaxDate.ReadOnly = true;
+            this.colMaxDate.Width = 97;
             // 
             // colSize
             // 
@@ -98,7 +116,8 @@
 
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.DataGridView dgvFolders;
-        private System.Windows.Forms.DataGridViewTextBoxColumn colPath;
+        private System.Windows.Forms.DataGridViewLinkColumn colPath;
+        private System.Windows.Forms.DataGridViewTextBoxColumn colMaxDate;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSize;
     }
 }

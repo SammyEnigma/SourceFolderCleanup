@@ -118,7 +118,12 @@ namespace SourceFolderCleanup.Services
             {
                 if (includeNames.Contains(di.Name) && (excludeNames?.All(name => !di.FullName.Contains(name)) ?? true))
                 {
-                    results.Add(new FolderInfo() { Path = di.FullName, TotalSize = GetFolderSize(di.FullName) });
+                    results.Add(new FolderInfo() 
+                    { 
+                        Path = di.FullName, 
+                        TotalSize = GetFolderSize(di.FullName),
+                        MaxDate = GetFolderMaxDate(di.FullName)
+                    });
                     return EnumFileResult.NextFolder;
                 }
 
