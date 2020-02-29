@@ -185,5 +185,26 @@ namespace SourceFolderCleanup
             linkLabel.Mode = ProgressLinkLabelMode.Text;
             linkLabel.Text = Readable.FileSize(deleteableBytes);
         }
+
+        private void btnDelete_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                var folders = GetDeletableFolders().Select(fi => fi.Path);
+                foreach (var folder in folders)
+                {
+                    Microsoft.VisualBasic.FileIO.FileSystem.DeleteDirectory(folder, 
+                        Microsoft.VisualBasic.FileIO.UIOption.OnlyErrorDialogs,
+                        Microsoft.VisualBasic.FileIO.RecycleOption.DeletePermanently,
+                        Microsoft.VisualBasic.FileIO.UICancelOption.ThrowException);
+                }
+                // todo: refresh UI
+            }
+            catch (Exception exc)
+            {
+                MessageBox.Show(exc.Message);
+            }
+            
+        }
     }
 }
