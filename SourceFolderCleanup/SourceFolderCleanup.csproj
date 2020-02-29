@@ -52,6 +52,12 @@
     <Compile Include="Controls\ProgressLinkLabel.Designer.cs">
       <DependentUpon>ProgressLinkLabel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\frmFolderList.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\frmFolderList.Designer.cs">
+      <DependentUpon>frmFolderList.cs</DependentUpon>
+    </Compile>
     <Compile Include="frmMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -66,6 +72,9 @@
     <Compile Include="Static\Readable_FileSize.cs" />
     <EmbeddedResource Include="Controls\ProgressLinkLabel.resx">
       <DependentUpon>ProgressLinkLabel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\frmFolderList.resx">
+      <DependentUpon>frmFolderList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.cs</DependentUpon>

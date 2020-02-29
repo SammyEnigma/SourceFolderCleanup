@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SourceFolderCleanup.Static;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -29,15 +30,15 @@ namespace SourceFolderCleanup.Services
             return result;
         }
 
-        public async Task<long> GetFolderTotalSizeAsync(IEnumerable<string> folders)
+        public async Task<long> GetFolderTotalSizeAsync(IEnumerable<FolderInfo> folders)
         {
             long result = 0;
 
             await Task.Run(() =>
             {
-                foreach (string folder in folders)
+                foreach (var folder in folders)
                 {
-                    result += GetFolderSize(folder);
+                    result += GetFolderSize(folder.Path);
                 }
             });
 
@@ -57,9 +58,9 @@ namespace SourceFolderCleanup.Services
             return result;
         }
 
-        public async Task<IEnumerable<string>> FilterFoldersOlderThanAsync(IEnumerable<string> folders, int daysOld)
+        public async Task<IEnumerable<FolderInfo>> FilterFoldersOlderThanAsync(IEnumerable<FolderInfo> folders, int daysOld)
         {
-            IEnumerable<string> results = null;
+            IEnumerable<FolderInfo> results = null;
 
             await Task.Run(() =>
             {
@@ -69,15 +70,15 @@ namespace SourceFolderCleanup.Services
             return results;
         }
 
-        public IEnumerable<string> FilterFoldersOlderThan(IEnumerable<string> folders, int daysOld)
+        public IEnumerable<FolderInfo> FilterFoldersOlderThan(IEnumerable<FolderInfo> folders, int daysOld)
         {
             DateTime cutOff = DateTime.Today.AddDays(daysOld * -1);
-            return folders.Where(path => GetFolderMaxDate(path) < cutOff);
+            return folders.Where(folder => GetFolderMaxDate(folder.Path) < cutOff);
         }
 
-        public async Task<IEnumerable<string>> GetBinObjFoldersAsync(string parentPath)
+        public async Task<IEnumerable<FolderInfo>> GetBinObjFoldersAsync(string parentPath)
         {
-            IEnumerable<string> results = null;
+            IEnumerable<FolderInfo> results = null;
 
             await Task.Run(() =>
             {
@@ -87,14 +88,14 @@ namespace SourceFolderCleanup.Services
             return results;
         }
 
-        public IEnumerable<string> GetBinObjFolders(string parentPath)
+        public IEnumerable<FolderInfo> GetBinObjFolders(string parentPath)
         {
             return GetSubfoldersNamed(parentPath, new string[] { "bin", "obj" }, new string[] { "node_modules" });
         }
 
-        public async Task<IEnumerable<string>> GetPackagesFoldersAsync(string parentPath)
+        public async Task<IEnumerable<FolderInfo>> GetPackagesFoldersAsync(string parentPath)
         {
-            IEnumerable<string> results = null;
+            IEnumerable<FolderInfo> results = null;
 
             await Task.Run(() =>
             {
@@ -104,20 +105,20 @@ namespace SourceFolderCleanup.Services
             return results;
         }
 
-        public IEnumerable<string> GetPackagesFolders(string parentPath)
+        public IEnumerable<FolderInfo> GetPackagesFolders(string parentPath)
         {
             return GetSubfoldersNamed(parentPath, new string[] { "packages" });
         }
 
-        private IEnumerable<string> GetSubfoldersNamed(string parentPath, string[] includeNames, string[] excludeNames = null)
+        private IEnumerable<FolderInfo> GetSubfoldersNamed(string parentPath, string[] includeNames, string[] excludeNames = null)
         {
-            List<string> results = new List<string>();
+            List<FolderInfo> results = new List<FolderInfo>();
 
             FileSystem.EnumFiles(parentPath, "*", directoryFound: (di) =>
             {
                 if (includeNames.Contains(di.Name) && (excludeNames?.All(name => !di.FullName.Contains(name)) ?? true))
                 {
-                    results.Add(di.FullName);
+                    results.Add(new FolderInfo() { Path = di.FullName, TotalSize = GetFolderSize(di.FullName) });
                     return EnumFileResult.NextFolder;
                 }
 
@@ -126,5 +127,13 @@ namespace SourceFolderCleanup.Services
 
             return results;
         }
+    }
+
+    public class FolderInfo
+    {
+        public string Path { get; set; }
+        public long TotalSize { get; set; }
+        public DateTime MaxDate { get; set; }
+        public string SizeText { get { return Readable.FileSize(TotalSize); } }
     }
 }

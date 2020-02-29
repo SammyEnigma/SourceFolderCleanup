@@ -1,5 +1,6 @@
 ﻿using JsonSettings.Library;
 using SourceFolderCleanup.Controls;
+using SourceFolderCleanup.Forms;
 using SourceFolderCleanup.Models;
 using SourceFolderCleanup.Services;
 using SourceFolderCleanup.Static;
@@ -19,14 +20,21 @@ namespace SourceFolderCleanup
         private Settings _settings;
         private ControlBinder<Settings> _binder;
 
-        private IEnumerable<string> _deleteableBinObj;
-        private IEnumerable<string> _deleteablePackages;
+        private IEnumerable<FolderInfo> _deleteableBinObj;
+        private IEnumerable<FolderInfo> _deleteablePackages;
 
         public frmMain()
         {
             InitializeComponent();
-            pllBinObjSize.LinkClicked += BinObjSize_LinkClicked;
-            pllPackagesSize.LinkClicked += PackagesSize_LinkClicked;
+            pllBinObjSize.LinkClicked += delegate(object sender, LinkLabelLinkClickedEventArgs e) { ShowFolderList(_deleteableBinObj); };
+            pllPackagesSize.LinkClicked += delegate (object sender, LinkLabelLinkClickedEventArgs e) { ShowFolderList(_deleteablePackages); };
+        }
+
+        private void ShowFolderList(IEnumerable<FolderInfo> folders)
+        {
+            var dlg = new frmFolderList();
+            dlg.Folders = folders;
+            dlg.ShowDialog();
         }
 
         private async void frmMain_Load(object sender, System.EventArgs e)
@@ -124,8 +132,8 @@ namespace SourceFolderCleanup
 
         private async Task AnalyzeFolderAsync(
             ProgressLinkLabel linkLabel, int deleteMonthsOld, 
-            Func<FileSystemUtil, Task<IEnumerable<string>>> getFolders, 
-            Action<IEnumerable<string>> captureResults)
+            Func<FileSystemUtil, Task<IEnumerable<FolderInfo>>> getFolders, 
+            Action<IEnumerable<FolderInfo>> captureResults)
         {
             var fsu = new FileSystemUtil();
 
@@ -136,17 +144,5 @@ namespace SourceFolderCleanup
             linkLabel.Mode = ProgressLinkLabelMode.Text;
             linkLabel.Text = Readable.FileSize(deleteableBytes);
         }
-
-        private void PackagesSize_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void BinObjSize_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-
     }
 }
