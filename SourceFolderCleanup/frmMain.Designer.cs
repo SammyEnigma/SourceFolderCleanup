@@ -42,11 +42,11 @@
             this.btnExit = new System.Windows.Forms.Button();
             this.btnExecute = new System.Windows.Forms.Button();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
-            this.llBinObjSize = new System.Windows.Forms.LinkLabel();
-            this.llPackagesSize = new System.Windows.Forms.LinkLabel();
             this.linkLabel4 = new System.Windows.Forms.LinkLabel();
             this.tbSourcePath = new WinForms.Library.Controls.BuilderTextBox();
             this.chkDelete = new System.Windows.Forms.CheckBox();
+            this.pllBinObjSize = new SourceFolderCleanup.Controls.ProgressLinkLabel();
+            this.pllPackagesSize = new SourceFolderCleanup.Controls.ProgressLinkLabel();
             this.SuspendLayout();
             // 
             // label1
@@ -80,7 +80,7 @@
             // chkDeletePackages
             // 
             this.chkDeletePackages.AutoSize = true;
-            this.chkDeletePackages.Location = new System.Drawing.Point(30, 141);
+            this.chkDeletePackages.Location = new System.Drawing.Point(30, 144);
             this.chkDeletePackages.Name = "chkDeletePackages";
             this.chkDeletePackages.Size = new System.Drawing.Size(85, 17);
             this.chkDeletePackages.TabIndex = 4;
@@ -184,26 +184,6 @@
             this.linkLabel1.TabStop = true;
             this.linkLabel1.Text = "History...";
             // 
-            // llBinObjSize
-            // 
-            this.llBinObjSize.AutoSize = true;
-            this.llBinObjSize.Location = new System.Drawing.Point(179, 119);
-            this.llBinObjSize.Name = "llBinObjSize";
-            this.llBinObjSize.Size = new System.Drawing.Size(52, 13);
-            this.llBinObjSize.TabIndex = 18;
-            this.llBinObjSize.TabStop = true;
-            this.llBinObjSize.Text = "preview";
-            // 
-            // llPackagesSize
-            // 
-            this.llPackagesSize.AutoSize = true;
-            this.llPackagesSize.Location = new System.Drawing.Point(121, 142);
-            this.llPackagesSize.Name = "llPackagesSize";
-            this.llPackagesSize.Size = new System.Drawing.Size(52, 13);
-            this.llPackagesSize.TabIndex = 19;
-            this.llPackagesSize.TabStop = true;
-            this.llPackagesSize.Text = "preview";
-            // 
             // linkLabel4
             // 
             this.linkLabel4.AutoSize = true;
@@ -236,16 +216,34 @@
             this.chkDelete.UseVisualStyleBackColor = true;
             this.chkDelete.CheckedChanged += new System.EventHandler(this.chkDelete_CheckedChanged);
             // 
+            // pllBinObjSize
+            // 
+            this.pllBinObjSize.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pllBinObjSize.Location = new System.Drawing.Point(179, 117);
+            this.pllBinObjSize.Mode = SourceFolderCleanup.Controls.ProgressLinkLabelMode.Text;
+            this.pllBinObjSize.Name = "pllBinObjSize";
+            this.pllBinObjSize.Size = new System.Drawing.Size(130, 19);
+            this.pllBinObjSize.TabIndex = 23;
+            // 
+            // pllPackagesSize
+            // 
+            this.pllPackagesSize.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pllPackagesSize.Location = new System.Drawing.Point(121, 142);
+            this.pllPackagesSize.Mode = SourceFolderCleanup.Controls.ProgressLinkLabelMode.Text;
+            this.pllPackagesSize.Name = "pllPackagesSize";
+            this.pllPackagesSize.Size = new System.Drawing.Size(130, 19);
+            this.pllPackagesSize.TabIndex = 24;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(513, 300);
+            this.Controls.Add(this.pllPackagesSize);
+            this.Controls.Add(this.pllBinObjSize);
             this.Controls.Add(this.chkDelete);
             this.Controls.Add(this.tbSourcePath);
             this.Controls.Add(this.linkLabel4);
-            this.Controls.Add(this.llPackagesSize);
-            this.Controls.Add(this.llBinObjSize);
             this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.btnExecute);
             this.Controls.Add(this.btnExit);
@@ -290,11 +288,11 @@
         private System.Windows.Forms.Button btnExit;
         private System.Windows.Forms.Button btnExecute;
         private System.Windows.Forms.LinkLabel linkLabel1;
-        private System.Windows.Forms.LinkLabel llBinObjSize;
-        private System.Windows.Forms.LinkLabel llPackagesSize;
         private System.Windows.Forms.LinkLabel linkLabel4;
         private WinForms.Library.Controls.BuilderTextBox tbSourcePath;
         private System.Windows.Forms.CheckBox chkDelete;
+        private Controls.ProgressLinkLabel pllBinObjSize;
+        private Controls.ProgressLinkLabel pllPackagesSize;
     }
 }
 

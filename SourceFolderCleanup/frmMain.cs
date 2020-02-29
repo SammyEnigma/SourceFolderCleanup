@@ -1,6 +1,8 @@
 ﻿using JsonSettings.Library;
+using SourceFolderCleanup.Controls;
 using SourceFolderCleanup.Models;
 using SourceFolderCleanup.Services;
+using SourceFolderCleanup.Static;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,6 +25,8 @@ namespace SourceFolderCleanup
         public frmMain()
         {
             InitializeComponent();
+            pllBinObjSize.LinkClicked += BinObjSize_LinkClicked;
+            pllPackagesSize.LinkClicked += PackagesSize_LinkClicked;
         }
 
         private async void frmMain_Load(object sender, System.EventArgs e)
@@ -84,40 +88,42 @@ namespace SourceFolderCleanup
             chkDeleteBinObj.Enabled = chkDelete.Checked;
             chkDeletePackages.Enabled = chkDelete.Checked;
             cbDeleteMonths.Enabled = chkDelete.Checked;
-            llBinObjSize.Enabled = chkDelete.Checked;
-            llPackagesSize.Enabled = chkDelete.Checked;
+            pllBinObjSize.Enabled = chkDelete.Checked;
+            pllPackagesSize.Enabled = chkDelete.Checked;
         }
 
         private async void cbDeleteMonths_SelectedIndexChanged(object sender, EventArgs e)
         {
-            llBinObjSize.Enabled = false;
-            llPackagesSize.Enabled = false;
-            llBinObjSize.Text = (chkDeleteBinObj.Checked) ? "Analyzing..." : "disabled";            
-            llPackagesSize.Text = (chkDeletePackages.Checked) ? "Analyzing..." : "disabled";
+            pllBinObjSize.Visible = false;
+            pllPackagesSize.Visible = false;
+            pllBinObjSize.Mode = ProgressLinkLabelMode.Progress;
+            pllPackagesSize.Mode = ProgressLinkLabelMode.Progress;
 
             List<Task> tasks = new List<Task>();
             if (_settings.DeleteBinAndObj)
             {
-                tasks.Add(AnalyzeFolderAsync(llBinObjSize, _settings.DeleteMonthsOld, 
+                pllBinObjSize.Visible = true;
+                tasks.Add(AnalyzeFolderAsync(pllBinObjSize, _settings.DeleteMonthsOld, 
                     async (fsu) => await fsu.GetBinObjFoldersAsync(_settings.SourcePath),
                     (results) => _deleteableBinObj = results));
             }
 
             if (_settings.DeletePackages)
             {
-                tasks.Add(AnalyzeFolderAsync(llPackagesSize, _settings.DeleteMonthsOld, 
+                pllPackagesSize.Visible = true;
+                tasks.Add(AnalyzeFolderAsync(pllPackagesSize, _settings.DeleteMonthsOld, 
                     async (fsu) => await fsu.GetPackagesFoldersAsync(_settings.SourcePath),
                     (results) => _deleteablePackages = results));
             }
 
             await Task.WhenAll(tasks);
 
-            llBinObjSize.Enabled = chkDelete.Checked;
-            llPackagesSize.Enabled = chkDelete.Checked;
+            pllBinObjSize.Enabled = chkDelete.Checked;
+            pllPackagesSize.Enabled = chkDelete.Checked;
         }
 
         private async Task AnalyzeFolderAsync(
-            LinkLabel linkLabel, int deleteMonthsOld, 
+            ProgressLinkLabel linkLabel, int deleteMonthsOld, 
             Func<FileSystemUtil, Task<IEnumerable<string>>> getFolders, 
             Action<IEnumerable<string>> captureResults)
         {
@@ -126,10 +132,21 @@ namespace SourceFolderCleanup
             var folders = await getFolders.Invoke(fsu);
             var deletable = await fsu.FilterFoldersOlderThanAsync(folders, deleteMonthsOld);
             captureResults.Invoke(deletable);
-            long deleteableBytes = await fsu.GetFolderTotalSizeAsync(deletable);            
-            linkLabel.Text = $"{deleteableBytes} total size";
+            long deleteableBytes = await fsu.GetFolderTotalSizeAsync(deletable);
+            linkLabel.Mode = ProgressLinkLabelMode.Text;
+            linkLabel.Text = Readable.FileSize(deleteableBytes);
         }
 
-        //private async Task
+        private void PackagesSize_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+        private void BinObjSize_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
+
+
     }
 }
