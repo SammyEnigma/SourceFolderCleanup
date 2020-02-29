@@ -33,11 +33,12 @@ namespace SourceFolderCleanup
             dlg.Folders = folders;
             dlg.ShowDialog();
             _settings.FolderListPosition = dlg.Position;
+            
+            control.Text = (dlg.SelectedSize != 0) ?
+                $"{Readable.FileSize(folders.Sum(item => item.TotalSize))}, {Readable.FileSize(dlg.SelectedSize)} selected" :
+                Readable.FileSize(folders.Sum(item => item.TotalSize));
 
-            if (dlg.SelectedSize != 0)
-            {
-                control.Text = $"{Readable.FileSize(folders.Sum(item => item.TotalSize))}, {Readable.FileSize(dlg.SelectedSize)} selected";
-            }            
+            UpdateDeleteButtonText();
         }
 
         private async void frmMain_Load(object sender, System.EventArgs e)
@@ -63,8 +64,8 @@ namespace SourceFolderCleanup
                 (model) => cbArchiveMonths.SetValue(model.ArchiveMonthsOld), monthValues);
 
             _binder.Document = _settings;
-            chkArchive_CheckedChanged(null, new EventArgs());
-            chkDelete_CheckedChanged(null, new EventArgs());
+            UpdateArchiveInfo();
+            UpdateDeleteInfo();
         }
 
         private void btnExit_Click(object sender, EventArgs e)
@@ -89,12 +90,22 @@ namespace SourceFolderCleanup
 
         private void chkArchive_CheckedChanged(object sender, EventArgs e)
         {
+            UpdateArchiveInfo();
+        }
+
+        private void chkDelete_CheckedChanged(object sender, EventArgs e)
+        {
+            UpdateDeleteInfo();
+        }
+
+        private void UpdateArchiveInfo()
+        {
             cbArchiveMonths.Enabled = chkArchive.Checked;
             tbArchivePath.Enabled = chkArchive.Checked;
             linkLabel4.Enabled = chkArchive.Checked;
         }
 
-        private void chkDelete_CheckedChanged(object sender, EventArgs e)
+        private void UpdateDeleteInfo()
         {
             chkDeleteBinObj.Enabled = chkDelete.Checked;
             chkDeletePackages.Enabled = chkDelete.Checked;
@@ -105,6 +116,7 @@ namespace SourceFolderCleanup
 
         private async void cbDeleteMonths_SelectedIndexChanged(object sender, EventArgs e)
         {
+            btnDelete.Enabled = false;
             pllBinObjSize.Visible = false;
             pllPackagesSize.Visible = false;
             pllBinObjSize.Mode = ProgressLinkLabelMode.Progress;
@@ -114,7 +126,7 @@ namespace SourceFolderCleanup
             if (_settings.DeleteBinAndObj)
             {
                 pllBinObjSize.Visible = true;
-                tasks.Add(AnalyzeFolderAsync(pllBinObjSize, _settings.DeleteMonthsOld, 
+                tasks.Add(AnalyzeFolderAsync(pllBinObjSize, _settings.DeleteMonthsOld,
                     async (fsu) => await fsu.GetBinObjFoldersAsync(_settings.SourcePath),
                     (results) => _settings.BinObjFolders = results.ToList()));
             }
@@ -122,7 +134,7 @@ namespace SourceFolderCleanup
             if (_settings.DeletePackages)
             {
                 pllPackagesSize.Visible = true;
-                tasks.Add(AnalyzeFolderAsync(pllPackagesSize, _settings.DeleteMonthsOld, 
+                tasks.Add(AnalyzeFolderAsync(pllPackagesSize, _settings.DeleteMonthsOld,
                     async (fsu) => await fsu.GetPackagesFoldersAsync(_settings.SourcePath),
                     (results) => _settings.PackagesFolders = results.ToList()));
             }
@@ -131,6 +143,30 @@ namespace SourceFolderCleanup
 
             pllBinObjSize.Enabled = chkDelete.Checked;
             pllPackagesSize.Enabled = chkDelete.Checked;
+
+            btnDelete.Enabled = true;
+            UpdateDeleteButtonText();
+        }
+
+        private void UpdateDeleteButtonText()
+        {
+            long deleteSize = GetDeletableFolders().Sum(item => item.TotalSize);
+            btnDelete.Text = $"Delete {Readable.FileSize(deleteSize)}";
+        }
+
+        private IEnumerable<FolderInfo> GetDeletableFolders()
+        {
+            List<FolderInfo> results = new List<FolderInfo>();
+
+            results.AddRange((_settings.BinObjFolders.Any(item => item.IsSelected)) ?
+                _settings.BinObjFolders.Where(item => item.IsSelected) :
+                _settings.BinObjFolders);
+            
+            results.AddRange((_settings.PackagesFolders.Any(item => item.IsSelected)) ?
+                _settings.PackagesFolders.Where(item => item.IsSelected) :
+                _settings.PackagesFolders);
+
+            return results;
         }
 
         private async Task AnalyzeFolderAsync(
@@ -139,7 +175,6 @@ namespace SourceFolderCleanup
             Action<IEnumerable<FolderInfo>> captureResults)
         {
             var fsu = new FileSystemUtil();
-
             var folders = await getFolders.Invoke(fsu);
             var deletable = folders.Where(folder => folder.IsMonthsOld(monthsOld));
             captureResults.Invoke(deletable);
