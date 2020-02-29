@@ -122,11 +122,14 @@ namespace SourceFolderCleanup
             pllBinObjSize.Mode = ProgressLinkLabelMode.Progress;
             pllPackagesSize.Mode = ProgressLinkLabelMode.Progress;
 
+            // data binding hasn't happened yet, so we need to read the combo box directly
+            int monthsOld = cbDeleteMonths.GetValue<int>();
+
             List<Task> tasks = new List<Task>();
             if (_settings.DeleteBinAndObj)
             {
                 pllBinObjSize.Visible = true;
-                tasks.Add(AnalyzeFolderAsync(pllBinObjSize, _settings.DeleteMonthsOld,
+                tasks.Add(AnalyzeFolderAsync(pllBinObjSize, monthsOld,
                     async (fsu) => await fsu.GetBinObjFoldersAsync(_settings.SourcePath),
                     (results) => _settings.BinObjFolders = results.ToList()));
             }
@@ -134,7 +137,7 @@ namespace SourceFolderCleanup
             if (_settings.DeletePackages)
             {
                 pllPackagesSize.Visible = true;
-                tasks.Add(AnalyzeFolderAsync(pllPackagesSize, _settings.DeleteMonthsOld,
+                tasks.Add(AnalyzeFolderAsync(pllPackagesSize, monthsOld,
                     async (fsu) => await fsu.GetPackagesFoldersAsync(_settings.SourcePath),
                     (results) => _settings.PackagesFolders = results.ToList()));
             }

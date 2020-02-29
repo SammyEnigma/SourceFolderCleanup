@@ -72,7 +72,7 @@ namespace SourceFolderCleanup.Services
 
         public IEnumerable<FolderInfo> GetBinObjFolders(string parentPath)
         {
-            return GetSubfoldersNamed(parentPath, new string[] { "bin", "obj" }, new string[] { "node_modules" });
+            return GetSubfoldersNamed(parentPath, new string[] { "bin", "obj" }, new string[] { "node_modules" }).Where(fi => fi.TotalSize > 0);
         }
 
         public async Task<IEnumerable<FolderInfo>> GetPackagesFoldersAsync(string parentPath)

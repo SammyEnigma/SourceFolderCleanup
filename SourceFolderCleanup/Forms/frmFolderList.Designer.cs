@@ -28,21 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.dgvFolders = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.lblTotalSize = new System.Windows.Forms.Label();
             this.lblSelectedSize = new System.Windows.Forms.Label();
+            this.dgvFolders = new System.Windows.Forms.DataGridView();
             this.colSelected = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.colPath = new System.Windows.Forms.DataGridViewLinkColumn();
             this.colMaxDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colSize = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panel1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.dgvFolders)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvFolders)).BeginInit();
             this.SuspendLayout();
             // 
             // panel1
@@ -53,26 +53,6 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(484, 64);
             this.panel1.TabIndex = 0;
-            // 
-            // dgvFolders
-            // 
-            this.dgvFolders.AllowUserToAddRows = false;
-            this.dgvFolders.AllowUserToDeleteRows = false;
-            this.dgvFolders.AllowUserToResizeRows = false;
-            this.dgvFolders.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvFolders.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.colSelected,
-            this.colPath,
-            this.colMaxDate,
-            this.colSize});
-            this.dgvFolders.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvFolders.Location = new System.Drawing.Point(0, 0);
-            this.dgvFolders.Name = "dgvFolders";
-            this.dgvFolders.RowHeadersVisible = false;
-            this.dgvFolders.Size = new System.Drawing.Size(484, 294);
-            this.dgvFolders.TabIndex = 1;
-            this.dgvFolders.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvFolders_CellContentClick);
-            this.dgvFolders.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvFolders_CellEndEdit);
             // 
             // tableLayoutPanel1
             // 
@@ -127,6 +107,27 @@
             this.lblSelectedSize.TabIndex = 3;
             this.lblSelectedSize.Text = "label3";
             // 
+            // dgvFolders
+            // 
+            this.dgvFolders.AllowUserToAddRows = false;
+            this.dgvFolders.AllowUserToDeleteRows = false;
+            this.dgvFolders.AllowUserToResizeRows = false;
+            this.dgvFolders.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgvFolders.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.colSelected,
+            this.colPath,
+            this.colMaxDate,
+            this.colSize});
+            this.dgvFolders.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgvFolders.Location = new System.Drawing.Point(0, 0);
+            this.dgvFolders.Name = "dgvFolders";
+            this.dgvFolders.RowHeadersVisible = false;
+            this.dgvFolders.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.dgvFolders.Size = new System.Drawing.Size(484, 294);
+            this.dgvFolders.TabIndex = 1;
+            this.dgvFolders.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvFolders_CellContentClick);
+            this.dgvFolders.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgvFolders_CellEndEdit);
+            // 
             // colSelected
             // 
             this.colSelected.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
@@ -151,12 +152,13 @@
             // 
             this.colMaxDate.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.AllCells;
             this.colMaxDate.DataPropertyName = "MaxDate";
-            dataGridViewCellStyle4.Format = "d";
-            dataGridViewCellStyle4.NullValue = null;
-            this.colMaxDate.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle2.Format = "d";
+            dataGridViewCellStyle2.NullValue = null;
+            this.colMaxDate.DefaultCellStyle = dataGridViewCellStyle2;
             this.colMaxDate.HeaderText = "Last Modified";
             this.colMaxDate.Name = "colMaxDate";
             this.colMaxDate.ReadOnly = true;
+            this.colMaxDate.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
             this.colMaxDate.Width = 97;
             // 
             // colSize
@@ -166,6 +168,7 @@
             this.colSize.HeaderText = "Size";
             this.colSize.Name = "colSize";
             this.colSize.ReadOnly = true;
+            this.colSize.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
             this.colSize.Width = 56;
             // 
             // frmFolderList
@@ -182,9 +185,9 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmFolderList_FormClosing);
             this.Load += new System.EventHandler(this.frmFolderList_Load);
             this.panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.dgvFolders)).EndInit();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgvFolders)).EndInit();
             this.ResumeLayout(false);
 
         }

@@ -1,5 +1,7 @@
-﻿using SourceFolderCleanup.Services;
+﻿using SourceFolderCleanup.Abstract;
+using SourceFolderCleanup.Services;
 using SourceFolderCleanup.Static;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -21,6 +23,8 @@ namespace SourceFolderCleanup.Forms
         public FormPosition Position { get; set; }
         public long SelectedSize { get; private set; }
 
+        private FolderInfoSorter _sorter;
+
         private void frmFolderList_Load(object sender, System.EventArgs e)
         {
             if (Position != null) Position.Apply(this);
@@ -36,6 +40,12 @@ namespace SourceFolderCleanup.Forms
                 dgvFolders.DataSource = bs;
 
                 lblTotalSize.Text = Readable.FileSize(Folders.Sum(item => item.TotalSize));
+
+                _sorter = new FolderInfoSorter(dgvFolders, new DataGridViewSorter<FolderInfo>.ColumnInfo() 
+                {
+                    Column = colSize,
+                    IsAscending = false
+                });
             }
             finally
             {
@@ -64,5 +74,5 @@ namespace SourceFolderCleanup.Forms
         {
             Position = FormPosition.FromForm(this);
         }
-    }    
+    }        
 }

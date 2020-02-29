@@ -46,12 +46,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Abstract\DataGridViewSorter.cs" />
     <Compile Include="Controls\ProgressLinkLabel.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Controls\ProgressLinkLabel.Designer.cs">
       <DependentUpon>ProgressLinkLabel.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\FolderInfoSorter.cs" />
     <Compile Include="Forms\frmFolderList.cs">
       <SubType>Form</SubType>
     </Compile>
