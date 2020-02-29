@@ -58,24 +58,6 @@ namespace SourceFolderCleanup.Services
             return result;
         }
 
-        public async Task<IEnumerable<FolderInfo>> FilterFoldersOlderThanAsync(IEnumerable<FolderInfo> folders, int daysOld)
-        {
-            IEnumerable<FolderInfo> results = null;
-
-            await Task.Run(() =>
-            {
-                results = FilterFoldersOlderThan(folders, daysOld);
-            });
-
-            return results;
-        }
-
-        public IEnumerable<FolderInfo> FilterFoldersOlderThan(IEnumerable<FolderInfo> folders, int daysOld)
-        {
-            DateTime cutOff = DateTime.Today.AddDays(daysOld * -1);
-            return folders.Where(folder => GetFolderMaxDate(folder.Path) < cutOff);
-        }
-
         public async Task<IEnumerable<FolderInfo>> GetBinObjFoldersAsync(string parentPath)
         {
             IEnumerable<FolderInfo> results = null;
@@ -141,5 +123,10 @@ namespace SourceFolderCleanup.Services
         public DateTime MaxDate { get; set; }
         public string SizeText { get { return Readable.FileSize(TotalSize); } }
         public bool IsSelected { get; set; }
+
+        public bool IsMonthsOld(int months)
+        {
+            return MaxDate < DateTime.Today.AddDays(months * -30);
+        }
     }
 }

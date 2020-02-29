@@ -132,14 +132,14 @@ namespace SourceFolderCleanup
         }
 
         private async Task AnalyzeFolderAsync(
-            ProgressLinkLabel linkLabel, int deleteMonthsOld, 
+            ProgressLinkLabel linkLabel, int monthsOld, 
             Func<FileSystemUtil, Task<IEnumerable<FolderInfo>>> getFolders, 
             Action<IEnumerable<FolderInfo>> captureResults)
         {
             var fsu = new FileSystemUtil();
 
             var folders = await getFolders.Invoke(fsu);
-            var deletable = await fsu.FilterFoldersOlderThanAsync(folders, deleteMonthsOld);
+            var deletable = folders.Where(folder => folder.IsMonthsOld(monthsOld));
             captureResults.Invoke(deletable);
             long deleteableBytes = await fsu.GetFolderTotalSizeAsync(deletable);
             linkLabel.Mode = ProgressLinkLabelMode.Text;
