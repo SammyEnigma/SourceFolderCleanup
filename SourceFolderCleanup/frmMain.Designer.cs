@@ -76,6 +76,7 @@
             this.chkDeleteBinObj.TabIndex = 3;
             this.chkDeleteBinObj.Text = "bin/ and obj/ folders";
             this.chkDeleteBinObj.UseVisualStyleBackColor = true;
+            this.chkDeleteBinObj.CheckedChanged += new System.EventHandler(this.chkDeleteBinObj_CheckedChanged);
             // 
             // chkDeletePackages
             // 
@@ -86,6 +87,7 @@
             this.chkDeletePackages.TabIndex = 4;
             this.chkDeletePackages.Text = "packages/";
             this.chkDeletePackages.UseVisualStyleBackColor = true;
+            this.chkDeletePackages.CheckedChanged += new System.EventHandler(this.chkDeletePackages_CheckedChanged);
             // 
             // cbDeleteMonths
             // 

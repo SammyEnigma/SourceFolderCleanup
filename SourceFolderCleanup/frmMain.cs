@@ -129,17 +129,13 @@ namespace SourceFolderCleanup
             if (_settings.DeleteBinAndObj)
             {
                 pllBinObjSize.Visible = true;
-                tasks.Add(AnalyzeFolderAsync(pllBinObjSize, monthsOld,
-                    async (fsu) => await fsu.GetBinObjFoldersAsync(_settings.SourcePath),
-                    (results) => _settings.BinObjFolders = results.ToList()));
+                tasks.Add(AnalyzeBinObj(monthsOld));
             }
 
             if (_settings.DeletePackages)
             {
                 pllPackagesSize.Visible = true;
-                tasks.Add(AnalyzeFolderAsync(pllPackagesSize, monthsOld,
-                    async (fsu) => await fsu.GetPackagesFoldersAsync(_settings.SourcePath),
-                    (results) => _settings.PackagesFolders = results.ToList()));
+                tasks.Add(AnalyzePackages(monthsOld));
             }
 
             await Task.WhenAll(tasks);
@@ -151,23 +147,46 @@ namespace SourceFolderCleanup
             UpdateDeleteButtonText();
         }
 
+        private Task AnalyzePackages(int monthsOld)
+        {
+            return AnalyzeFolderAsync(
+                pllPackagesSize, monthsOld,
+                async (fsu) => await fsu.GetPackagesFoldersAsync(_settings.SourcePath),
+                (results) => _settings.PackagesFolders = results.ToList());
+        }
+
+        private Task AnalyzeBinObj(int monthsOld)
+        {
+            return AnalyzeFolderAsync(
+                pllBinObjSize, monthsOld,
+                async (fsu) => await fsu.GetBinObjFoldersAsync(_settings.SourcePath),
+                (results) => _settings.BinObjFolders = results.ToList());
+        }
+
         private void UpdateDeleteButtonText()
         {
             long deleteSize = GetDeletableFolders().Sum(item => item.TotalSize);
             btnDelete.Text = $"Delete {Readable.FileSize(deleteSize)}";
+            btnDelete.Enabled = (deleteSize > 0);
         }
 
         private IEnumerable<FolderInfo> GetDeletableFolders()
         {
             List<FolderInfo> results = new List<FolderInfo>();
 
-            results.AddRange((_settings.BinObjFolders.Any(item => item.IsSelected)) ?
-                _settings.BinObjFolders.Where(item => item.IsSelected) :
-                _settings.BinObjFolders);
-            
-            results.AddRange((_settings.PackagesFolders.Any(item => item.IsSelected)) ?
-                _settings.PackagesFolders.Where(item => item.IsSelected) :
-                _settings.PackagesFolders);
+            if (chkDeleteBinObj.Checked)
+            {
+                results.AddRange((_settings.BinObjFolders.Any(item => item.IsSelected)) ?
+                    _settings.BinObjFolders.Where(item => item.IsSelected) :
+                    _settings.BinObjFolders);
+            }
+
+            if (chkDeletePackages.Checked)
+            {
+                results.AddRange((_settings.PackagesFolders.Any(item => item.IsSelected)) ?
+                    _settings.PackagesFolders.Where(item => item.IsSelected) :
+                    _settings.PackagesFolders);
+            }
 
             return results;
         }
@@ -205,6 +224,38 @@ namespace SourceFolderCleanup
                 MessageBox.Show(exc.Message);
             }
             
+        }
+
+        private async void chkDeleteBinObj_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkDeleteBinObj.Checked)
+            {
+                pllBinObjSize.Visible = true;
+                int monthsOld = cbDeleteMonths.GetValue<int>();
+                await AnalyzeBinObj(monthsOld);
+            }
+            else
+            {
+                pllBinObjSize.Visible = false;
+            }
+
+            UpdateDeleteButtonText();
+        }
+
+        private async void chkDeletePackages_CheckedChanged(object sender, EventArgs e)
+        {
+            if (chkDeletePackages.Checked)
+            {
+                pllPackagesSize.Visible = true;
+                int monthsOld = cbDeleteMonths.GetValue<int>();
+                await AnalyzePackages(monthsOld);
+            }
+            else
+            {
+                pllPackagesSize.Visible = false;
+            }
+
+            UpdateDeleteButtonText();
         }
     }
 }
