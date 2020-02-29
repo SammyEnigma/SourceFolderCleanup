@@ -45,8 +45,8 @@
             this.linkLabel4 = new System.Windows.Forms.LinkLabel();
             this.tbSourcePath = new WinForms.Library.Controls.BuilderTextBox();
             this.chkDelete = new System.Windows.Forms.CheckBox();
-            this.pllBinObjSize = new SourceFolderCleanup.Controls.ProgressLinkLabel();
             this.pllPackagesSize = new SourceFolderCleanup.Controls.ProgressLinkLabel();
+            this.pllBinObjSize = new SourceFolderCleanup.Controls.ProgressLinkLabel();
             this.SuspendLayout();
             // 
             // label1
@@ -70,7 +70,7 @@
             // chkDeleteBinObj
             // 
             this.chkDeleteBinObj.AutoSize = true;
-            this.chkDeleteBinObj.Location = new System.Drawing.Point(30, 118);
+            this.chkDeleteBinObj.Location = new System.Drawing.Point(30, 120);
             this.chkDeleteBinObj.Name = "chkDeleteBinObj";
             this.chkDeleteBinObj.Size = new System.Drawing.Size(143, 17);
             this.chkDeleteBinObj.TabIndex = 3;
@@ -80,7 +80,7 @@
             // chkDeletePackages
             // 
             this.chkDeletePackages.AutoSize = true;
-            this.chkDeletePackages.Location = new System.Drawing.Point(30, 144);
+            this.chkDeletePackages.Location = new System.Drawing.Point(30, 150);
             this.chkDeletePackages.Name = "chkDeletePackages";
             this.chkDeletePackages.Size = new System.Drawing.Size(85, 17);
             this.chkDeletePackages.TabIndex = 4;
@@ -109,7 +109,7 @@
             // chkArchive
             // 
             this.chkArchive.AutoSize = true;
-            this.chkArchive.Location = new System.Drawing.Point(12, 175);
+            this.chkArchive.Location = new System.Drawing.Point(12, 189);
             this.chkArchive.Name = "chkArchive";
             this.chkArchive.Size = new System.Drawing.Size(181, 17);
             this.chkArchive.TabIndex = 9;
@@ -121,7 +121,7 @@
             // 
             this.cbArchiveMonths.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cbArchiveMonths.FormattingEnabled = true;
-            this.cbArchiveMonths.Location = new System.Drawing.Point(199, 173);
+            this.cbArchiveMonths.Location = new System.Drawing.Point(199, 187);
             this.cbArchiveMonths.Name = "cbArchiveMonths";
             this.cbArchiveMonths.Size = new System.Drawing.Size(73, 21);
             this.cbArchiveMonths.TabIndex = 10;
@@ -129,7 +129,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(278, 176);
+            this.label3.Location = new System.Drawing.Point(278, 190);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(49, 13);
             this.label3.TabIndex = 11;
@@ -138,7 +138,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(27, 199);
+            this.label5.Location = new System.Drawing.Point(27, 213);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(106, 13);
             this.label5.TabIndex = 13;
@@ -147,7 +147,7 @@
             // tbArchivePath
             // 
             this.tbArchivePath.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.tbArchivePath.Location = new System.Drawing.Point(30, 215);
+            this.tbArchivePath.Location = new System.Drawing.Point(30, 229);
             this.tbArchivePath.Name = "tbArchivePath";
             this.tbArchivePath.Size = new System.Drawing.Size(471, 26);
             this.tbArchivePath.Suggestions = null;
@@ -157,7 +157,7 @@
             // 
             // btnExit
             // 
-            this.btnExit.Location = new System.Drawing.Point(426, 266);
+            this.btnExit.Location = new System.Drawing.Point(426, 272);
             this.btnExit.Name = "btnExit";
             this.btnExit.Size = new System.Drawing.Size(75, 23);
             this.btnExit.TabIndex = 15;
@@ -167,7 +167,7 @@
             // 
             // btnExecute
             // 
-            this.btnExecute.Location = new System.Drawing.Point(345, 266);
+            this.btnExecute.Location = new System.Drawing.Point(345, 272);
             this.btnExecute.Name = "btnExecute";
             this.btnExecute.Size = new System.Drawing.Size(75, 23);
             this.btnExecute.TabIndex = 16;
@@ -177,7 +177,7 @@
             // linkLabel1
             // 
             this.linkLabel1.AutoSize = true;
-            this.linkLabel1.Location = new System.Drawing.Point(12, 271);
+            this.linkLabel1.Location = new System.Drawing.Point(9, 277);
             this.linkLabel1.Name = "linkLabel1";
             this.linkLabel1.Size = new System.Drawing.Size(58, 13);
             this.linkLabel1.TabIndex = 17;
@@ -187,7 +187,7 @@
             // linkLabel4
             // 
             this.linkLabel4.AutoSize = true;
-            this.linkLabel4.Location = new System.Drawing.Point(333, 176);
+            this.linkLabel4.Location = new System.Drawing.Point(333, 190);
             this.linkLabel4.Name = "linkLabel4";
             this.linkLabel4.Size = new System.Drawing.Size(52, 13);
             this.linkLabel4.TabIndex = 20;
@@ -216,29 +216,29 @@
             this.chkDelete.UseVisualStyleBackColor = true;
             this.chkDelete.CheckedChanged += new System.EventHandler(this.chkDelete_CheckedChanged);
             // 
-            // pllBinObjSize
-            // 
-            this.pllBinObjSize.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pllBinObjSize.Location = new System.Drawing.Point(179, 117);
-            this.pllBinObjSize.Mode = SourceFolderCleanup.Controls.ProgressLinkLabelMode.Text;
-            this.pllBinObjSize.Name = "pllBinObjSize";
-            this.pllBinObjSize.Size = new System.Drawing.Size(130, 19);
-            this.pllBinObjSize.TabIndex = 23;
-            // 
             // pllPackagesSize
             // 
             this.pllPackagesSize.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.pllPackagesSize.Location = new System.Drawing.Point(121, 142);
+            this.pllPackagesSize.Location = new System.Drawing.Point(121, 148);
             this.pllPackagesSize.Mode = SourceFolderCleanup.Controls.ProgressLinkLabelMode.Text;
             this.pllPackagesSize.Name = "pllPackagesSize";
             this.pllPackagesSize.Size = new System.Drawing.Size(130, 19);
             this.pllPackagesSize.TabIndex = 24;
             // 
+            // pllBinObjSize
+            // 
+            this.pllBinObjSize.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.pllBinObjSize.Location = new System.Drawing.Point(179, 119);
+            this.pllBinObjSize.Mode = SourceFolderCleanup.Controls.ProgressLinkLabelMode.Text;
+            this.pllBinObjSize.Name = "pllBinObjSize";
+            this.pllBinObjSize.Size = new System.Drawing.Size(130, 19);
+            this.pllBinObjSize.TabIndex = 23;
+            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(513, 300);
+            this.ClientSize = new System.Drawing.Size(513, 307);
             this.Controls.Add(this.pllPackagesSize);
             this.Controls.Add(this.pllBinObjSize);
             this.Controls.Add(this.chkDelete);

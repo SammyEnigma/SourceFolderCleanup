@@ -1,4 +1,5 @@
 ﻿using JsonSettings.Library;
+using WinForms.Library.Models;
 using static System.Environment;
 
 namespace SourceFolderCleanup.Models
@@ -15,6 +16,8 @@ namespace SourceFolderCleanup.Models
         public bool Archive { get; set; }
         public int ArchiveMonthsOld { get; set; }
         public string ArchivePath { get; set; }
+
+        public FormPosition FolderListPosition { get; set; }
 
         public override string Filename => BuildPath(SpecialFolder.LocalApplicationData, "SourceFolderCleanup", "settings.json");
     }

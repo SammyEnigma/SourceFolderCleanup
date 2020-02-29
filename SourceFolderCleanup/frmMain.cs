@@ -32,9 +32,10 @@ namespace SourceFolderCleanup
 
         private void ShowFolderList(IEnumerable<FolderInfo> folders)
         {
-            var dlg = new frmFolderList();
+            var dlg = new frmFolderList() { Position = _settings.FolderListPosition };
             dlg.Folders = folders;
             dlg.ShowDialog();
+            _settings.FolderListPosition = dlg.Position;
         }
 
         private async void frmMain_Load(object sender, System.EventArgs e)

@@ -140,5 +140,6 @@ namespace SourceFolderCleanup.Services
         public long TotalSize { get; set; }
         public DateTime MaxDate { get; set; }
         public string SizeText { get { return Readable.FileSize(TotalSize); } }
+        public bool IsSelected { get; set; }
     }
 }
