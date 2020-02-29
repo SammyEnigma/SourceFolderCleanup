@@ -19,6 +19,7 @@ namespace SourceFolderCleanup.Forms
 
         public IEnumerable<FolderInfo> Folders { get; set; }
         public FormPosition Position { get; set; }
+        public long SelectedSize { get; private set; }
 
         private void frmFolderList_Load(object sender, System.EventArgs e)
         {
@@ -55,8 +56,8 @@ namespace SourceFolderCleanup.Forms
         {
             var dataSource = dgvFolders.DataSource as BindingSource;
             var list = dataSource.DataSource as BindingList<FolderInfo>;
-            long selectedSize = list.Where(item => item.IsSelected).Sum(item => item.TotalSize);
-            lblSelectedSize.Text = Readable.FileSize(selectedSize);
+            SelectedSize = list.Where(item => item.IsSelected).Sum(item => item.TotalSize);
+            lblSelectedSize.Text = Readable.FileSize(SelectedSize);
         }
 
         private void frmFolderList_FormClosing(object sender, FormClosingEventArgs e)

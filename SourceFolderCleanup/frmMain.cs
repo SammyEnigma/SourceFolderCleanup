@@ -20,22 +20,24 @@ namespace SourceFolderCleanup
         private Settings _settings;
         private ControlBinder<Settings> _binder;
 
-        private IEnumerable<FolderInfo> _deleteableBinObj;
-        private IEnumerable<FolderInfo> _deleteablePackages;
-
         public frmMain()
         {
             InitializeComponent();
-            pllBinObjSize.LinkClicked += delegate(object sender, LinkLabelLinkClickedEventArgs e) { ShowFolderList(_deleteableBinObj); };
-            pllPackagesSize.LinkClicked += delegate (object sender, LinkLabelLinkClickedEventArgs e) { ShowFolderList(_deleteablePackages); };
+            pllBinObjSize.LinkClicked += delegate(object sender, LinkLabelLinkClickedEventArgs e) { ShowFolderList(sender as LinkLabel, _settings.BinObjFolders); };
+            pllPackagesSize.LinkClicked += delegate (object sender, LinkLabelLinkClickedEventArgs e) { ShowFolderList(sender as LinkLabel, _settings.PackagesFolders); };
         }
 
-        private void ShowFolderList(IEnumerable<FolderInfo> folders)
+        private void ShowFolderList(LinkLabel control, IEnumerable<FolderInfo> folders)
         {
             var dlg = new frmFolderList() { Position = _settings.FolderListPosition };
             dlg.Folders = folders;
             dlg.ShowDialog();
             _settings.FolderListPosition = dlg.Position;
+
+            if (dlg.SelectedSize != 0)
+            {
+                control.Text = $"{Readable.FileSize(folders.Sum(item => item.TotalSize))}, {Readable.FileSize(dlg.SelectedSize)} selected";
+            }            
         }
 
         private async void frmMain_Load(object sender, System.EventArgs e)
@@ -114,7 +116,7 @@ namespace SourceFolderCleanup
                 pllBinObjSize.Visible = true;
                 tasks.Add(AnalyzeFolderAsync(pllBinObjSize, _settings.DeleteMonthsOld, 
                     async (fsu) => await fsu.GetBinObjFoldersAsync(_settings.SourcePath),
-                    (results) => _deleteableBinObj = results));
+                    (results) => _settings.BinObjFolders = results.ToList()));
             }
 
             if (_settings.DeletePackages)
@@ -122,7 +124,7 @@ namespace SourceFolderCleanup
                 pllPackagesSize.Visible = true;
                 tasks.Add(AnalyzeFolderAsync(pllPackagesSize, _settings.DeleteMonthsOld, 
                     async (fsu) => await fsu.GetPackagesFoldersAsync(_settings.SourcePath),
-                    (results) => _deleteablePackages = results));
+                    (results) => _settings.PackagesFolders = results.ToList()));
             }
 
             await Task.WhenAll(tasks);
@@ -141,7 +143,7 @@ namespace SourceFolderCleanup
             var folders = await getFolders.Invoke(fsu);
             var deletable = folders.Where(folder => folder.IsMonthsOld(monthsOld));
             captureResults.Invoke(deletable);
-            long deleteableBytes = await fsu.GetFolderTotalSizeAsync(deletable);
+            long deleteableBytes = deletable.Sum(item => item.TotalSize);
             linkLabel.Mode = ProgressLinkLabelMode.Text;
             linkLabel.Text = Readable.FileSize(deleteableBytes);
         }

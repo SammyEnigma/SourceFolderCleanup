@@ -222,7 +222,7 @@
             this.pllPackagesSize.Location = new System.Drawing.Point(121, 148);
             this.pllPackagesSize.Mode = SourceFolderCleanup.Controls.ProgressLinkLabelMode.Text;
             this.pllPackagesSize.Name = "pllPackagesSize";
-            this.pllPackagesSize.Size = new System.Drawing.Size(130, 19);
+            this.pllPackagesSize.Size = new System.Drawing.Size(188, 19);
             this.pllPackagesSize.TabIndex = 24;
             // 
             // pllBinObjSize
@@ -231,7 +231,7 @@
             this.pllBinObjSize.Location = new System.Drawing.Point(179, 119);
             this.pllBinObjSize.Mode = SourceFolderCleanup.Controls.ProgressLinkLabelMode.Text;
             this.pllBinObjSize.Name = "pllBinObjSize";
-            this.pllBinObjSize.Size = new System.Drawing.Size(130, 19);
+            this.pllBinObjSize.Size = new System.Drawing.Size(188, 19);
             this.pllBinObjSize.TabIndex = 23;
             // 
             // frmMain
