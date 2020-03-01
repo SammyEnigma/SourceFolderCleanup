@@ -125,6 +125,11 @@ namespace SourceFolderCleanup
             // data binding hasn't happened yet, so we need to read the combo box directly
             int monthsOld = cbDeleteMonths.GetValue<int>();
 
+            await AnalyzeFolders(monthsOld);
+        }
+
+        private async Task AnalyzeFolders(int monthsOld)
+        {
             List<Task> tasks = new List<Task>();
             if (_settings.DeleteBinAndObj)
             {
@@ -205,25 +210,45 @@ namespace SourceFolderCleanup
             linkLabel.Text = Readable.FileSize(deleteableBytes);
         }
 
-        private void btnDelete_Click(object sender, EventArgs e)
+        private async void btnDelete_Click(object sender, EventArgs e)
         {
             try
             {
                 var folders = GetDeletableFolders().Select(fi => fi.Path);
-                foreach (var folder in folders)
+
+                IProgress<string> progress = new Progress<string>(ShowCurrentDeletingFolder);
+                await Task.Run(() =>
                 {
-                    Microsoft.VisualBasic.FileIO.FileSystem.DeleteDirectory(folder, 
-                        Microsoft.VisualBasic.FileIO.UIOption.OnlyErrorDialogs,
-                        Microsoft.VisualBasic.FileIO.RecycleOption.DeletePermanently,
-                        Microsoft.VisualBasic.FileIO.UICancelOption.ThrowException);
-                }
-                // todo: refresh UI
+                    foreach (var folder in folders)
+                    {
+                        // thanks to https://stackoverflow.com/a/27522561/2023653 although still a little confusing
+                        progress.Report(folder);
+                        Microsoft.VisualBasic.FileIO.FileSystem.DeleteDirectory(folder,
+                            Microsoft.VisualBasic.FileIO.UIOption.OnlyErrorDialogs,
+                            Microsoft.VisualBasic.FileIO.RecycleOption.DeletePermanently,
+                            Microsoft.VisualBasic.FileIO.UICancelOption.ThrowException);
+                    }
+                });
+
+                int monthsOld = cbDeleteMonths.GetValue<int>();
+                await AnalyzeFolders(monthsOld);
             }
             catch (Exception exc)
             {
                 MessageBox.Show(exc.Message);
             }
-            
+            finally
+            {
+                lblDeleting.Visible = false;
+                llCancelDelete.Visible = false;
+            }            
+        }
+
+        private void ShowCurrentDeletingFolder(string path)
+        {
+            lblDeleting.Visible = true;
+            llCancelDelete.Visible = true;
+            lblDeleting.Text = path;
         }
 
         private async void chkDeleteBinObj_CheckedChanged(object sender, EventArgs e)

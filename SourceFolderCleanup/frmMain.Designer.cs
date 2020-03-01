@@ -45,6 +45,8 @@
             this.linkLabel4 = new System.Windows.Forms.LinkLabel();
             this.tbSourcePath = new WinForms.Library.Controls.BuilderTextBox();
             this.chkDelete = new System.Windows.Forms.CheckBox();
+            this.llCancelDelete = new System.Windows.Forms.LinkLabel();
+            this.lblDeleting = new System.Windows.Forms.Label();
             this.pllPackagesSize = new SourceFolderCleanup.Controls.ProgressLinkLabel();
             this.pllBinObjSize = new SourceFolderCleanup.Controls.ProgressLinkLabel();
             this.SuspendLayout();
@@ -219,6 +221,27 @@
             this.chkDelete.UseVisualStyleBackColor = true;
             this.chkDelete.CheckedChanged += new System.EventHandler(this.chkDelete_CheckedChanged);
             // 
+            // llCancelDelete
+            // 
+            this.llCancelDelete.AutoSize = true;
+            this.llCancelDelete.Location = new System.Drawing.Point(455, 187);
+            this.llCancelDelete.Name = "llCancelDelete";
+            this.llCancelDelete.Size = new System.Drawing.Size(46, 13);
+            this.llCancelDelete.TabIndex = 25;
+            this.llCancelDelete.TabStop = true;
+            this.llCancelDelete.Text = "Cancel";
+            this.llCancelDelete.Visible = false;
+            // 
+            // lblDeleting
+            // 
+            this.lblDeleting.AutoSize = true;
+            this.lblDeleting.Location = new System.Drawing.Point(167, 187);
+            this.lblDeleting.Name = "lblDeleting";
+            this.lblDeleting.Size = new System.Drawing.Size(54, 13);
+            this.lblDeleting.TabIndex = 26;
+            this.lblDeleting.Text = "Deleting";
+            this.lblDeleting.Visible = false;
+            // 
             // pllPackagesSize
             // 
             this.pllPackagesSize.Font = new System.Drawing.Font("Verdana", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -242,6 +265,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(513, 348);
+            this.Controls.Add(this.lblDeleting);
+            this.Controls.Add(this.llCancelDelete);
             this.Controls.Add(this.pllPackagesSize);
             this.Controls.Add(this.pllBinObjSize);
             this.Controls.Add(this.chkDelete);
@@ -296,6 +321,8 @@
         private System.Windows.Forms.CheckBox chkDelete;
         private Controls.ProgressLinkLabel pllBinObjSize;
         private Controls.ProgressLinkLabel pllPackagesSize;
+        private System.Windows.Forms.LinkLabel llCancelDelete;
+        private System.Windows.Forms.Label lblDeleting;
     }
 }
 
