@@ -40,6 +40,8 @@
             this.colPath = new System.Windows.Forms.DataGridViewLinkColumn();
             this.colMaxDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colSize = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.llSelectAll = new System.Windows.Forms.LinkLabel();
+            this.llInvertSelection = new System.Windows.Forms.LinkLabel();
             this.panel1.SuspendLayout();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFolders)).BeginInit();
@@ -47,6 +49,8 @@
             // 
             // panel1
             // 
+            this.panel1.Controls.Add(this.llInvertSelection);
+            this.panel1.Controls.Add(this.llSelectAll);
             this.panel1.Controls.Add(this.tableLayoutPanel1);
             this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.panel1.Location = new System.Drawing.Point(0, 294);
@@ -171,6 +175,28 @@
             this.colSize.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Programmatic;
             this.colSize.Width = 56;
             // 
+            // llSelectAll
+            // 
+            this.llSelectAll.AutoSize = true;
+            this.llSelectAll.Location = new System.Drawing.Point(234, 12);
+            this.llSelectAll.Name = "llSelectAll";
+            this.llSelectAll.Size = new System.Drawing.Size(60, 13);
+            this.llSelectAll.TabIndex = 1;
+            this.llSelectAll.TabStop = true;
+            this.llSelectAll.Text = "Select All";
+            this.llSelectAll.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llSelectAll_LinkClicked);
+            // 
+            // llInvertSelection
+            // 
+            this.llInvertSelection.AutoSize = true;
+            this.llInvertSelection.Location = new System.Drawing.Point(300, 12);
+            this.llInvertSelection.Name = "llInvertSelection";
+            this.llInvertSelection.Size = new System.Drawing.Size(98, 13);
+            this.llInvertSelection.TabIndex = 2;
+            this.llInvertSelection.TabStop = true;
+            this.llInvertSelection.Text = "Invert Selection";
+            this.llInvertSelection.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.llInvertSelection_LinkClicked);
+            // 
             // frmFolderList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
@@ -185,6 +211,7 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmFolderList_FormClosing);
             this.Load += new System.EventHandler(this.frmFolderList_Load);
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgvFolders)).EndInit();
@@ -205,5 +232,7 @@
         private System.Windows.Forms.DataGridViewLinkColumn colPath;
         private System.Windows.Forms.DataGridViewTextBoxColumn colMaxDate;
         private System.Windows.Forms.DataGridViewTextBoxColumn colSize;
+        private System.Windows.Forms.LinkLabel llInvertSelection;
+        private System.Windows.Forms.LinkLabel llSelectAll;
     }
 }

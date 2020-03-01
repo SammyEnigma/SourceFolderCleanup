@@ -64,6 +64,11 @@ namespace SourceFolderCleanup.Forms
 
         private void dgvFolders_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
+            UpdateSelectedSize();
+        }
+
+        private void UpdateSelectedSize()
+        {
             var dataSource = dgvFolders.DataSource as BindingSource;
             var list = dataSource.DataSource as BindingList<FolderInfo>;
             SelectedSize = list.Where(item => item.IsSelected).Sum(item => item.TotalSize);
@@ -73,6 +78,27 @@ namespace SourceFolderCleanup.Forms
         private void frmFolderList_FormClosing(object sender, FormClosingEventArgs e)
         {
             Position = FormPosition.FromForm(this);
+        }
+
+        private void llSelectAll_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            foreach (DataGridViewRow row in dgvFolders.Rows)
+            {
+                row.Cells["colSelected"].Value = true;
+            }
+
+            UpdateSelectedSize();
+        }
+
+        private void llInvertSelection_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            foreach (DataGridViewRow row in dgvFolders.Rows)
+            {
+                bool value = (bool)row.Cells["colSelected"].Value;
+                row.Cells["colSelected"].Value = !value;
+            }
+
+            UpdateSelectedSize();
         }
     }        
 }
