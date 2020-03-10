@@ -179,14 +179,14 @@ namespace SourceFolderCleanup
         {
             List<FolderInfo> results = new List<FolderInfo>();
 
-            if (chkDeleteBinObj.Checked)
+            if (chkDeleteBinObj.Checked && _settings.BinObjFolders != null)
             {
                 results.AddRange((_settings.BinObjFolders.Any(item => item.IsSelected)) ?
                     _settings.BinObjFolders.Where(item => item.IsSelected) :
                     _settings.BinObjFolders);
             }
 
-            if (chkDeletePackages.Checked)
+            if (chkDeletePackages.Checked && _settings.PackagesFolders != null)
             {
                 results.AddRange((_settings.PackagesFolders.Any(item => item.IsSelected)) ?
                     _settings.PackagesFolders.Where(item => item.IsSelected) :
